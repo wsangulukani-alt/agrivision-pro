@@ -1,0 +1,292 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type User = 
+ record {
+   email: text;
+   id: nat;
+   name: text;
+   role: text;
+ };
+type SupportStatus = 
+ variant {
+   closed;
+   inProgress;
+   open;
+   resolved;
+ };
+type SupportRequest = 
+ record {
+   attachments: vec text;
+   category: text;
+   createdAt: int;
+   description: text;
+   id: nat;
+   priority: SupportPriority;
+   status: SupportStatus;
+   subject: text;
+ };
+type SupportPriority = 
+ variant {
+   important;
+   urgent;
+ };
+type Stage = 
+ variant {
+   growing;
+   harvesting;
+   planting;
+ };
+type Sale = 
+ record {
+   buyer: text;
+   crop: text;
+   date: int;
+   farm: text;
+   id: nat;
+   quantity: float64;
+   totalAmount: float64;
+   unitPrice: float64;
+ };
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type ReportType = 
+ variant {
+   fieldActivity;
+   market;
+   soil;
+   yield;
+ };
+type ReportStatus = 
+ variant {
+   generated;
+   saved;
+ };
+type Report = 
+ record {
+   generatedDate: int;
+   id: nat;
+   locationFarm: text;
+   name: text;
+   reportType: ReportType;
+   status: ReportStatus;
+ };
+type RegionalFocus = 
+ variant {
+   global;
+   malawi;
+   sadc;
+ };
+type ProductionCycle = 
+ record {
+   areaHa: float64;
+   crop: text;
+   endDate: opt int;
+   expectedYield: float64;
+   farmField: text;
+   id: nat;
+   stage: Stage;
+   startDate: int;
+   status: text;
+ };
+type PaymentStatus = 
+ variant {
+   pending;
+   processed;
+ };
+type Payment = 
+ record {
+   amount: float64;
+   date: int;
+   description: text;
+   id: nat;
+   status: PaymentStatus;
+ };
+type NewsArticle = 
+ record {
+   bannerImage: text;
+   body: text;
+   createdAt: int;
+   featuredOnPage: vec text;
+   headline: text;
+   id: nat;
+   regionalFocus: RegionalFocus;
+   relatedCrops: vec text;
+   scheduledPublishDate: opt int;
+   status: ArticleStatus;
+   subHeadline: text;
+   tags: vec text;
+ };
+type InventoryStatus = 
+ variant {
+   critical;
+   inStock;
+   lowStock;
+ };
+type InventoryItem = 
+ record {
+   id: nat;
+   name: text;
+   quantity: float64;
+   status: InventoryStatus;
+   threshold: float64;
+   unit: text;
+ };
+type FarmStatus = 
+ variant {
+   active;
+   inactive;
+ };
+type Farm = 
+ record {
+   id: nat;
+   keyCrops: vec text;
+   location: text;
+   manager: text;
+   name: text;
+   status: FarmStatus;
+   totalAreaHa: float64;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type Crop = 
+ record {
+   areaHa: float64;
+   cultivationPractices: text;
+   description: text;
+   farm: nat;
+   harvestingYields: text;
+   id: nat;
+   image: opt text;
+   lastHarvest: opt int;
+   name: text;
+   pestsDiseases: text;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type ArticleStatus = 
+ variant {
+   draft;
+   pendingReview;
+   published;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  addCrop: (crop: Crop) -> (nat);
+  addFarm: (farm: Farm) -> (nat);
+  addInventoryItem: (item: InventoryItem) -> (nat);
+  addPayment: (payment: Payment) -> (nat);
+  addProductionCycle: (cycle: ProductionCycle) -> (nat);
+  addReport: (report: Report) -> (nat);
+  addSale: (sale: Sale) -> (nat);
+  addSupportRequest: (request: SupportRequest) -> (nat);
+  addUser: (user: User) -> (nat);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createNewsArticle: (article: NewsArticle) -> (nat);
+  deleteCrop: (id: nat) -> ();
+  deleteFarm: (id: nat) -> ();
+  execute: (qJson: text) -> (Result) query;
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getCrop: (id: nat) -> (opt Crop) query;
+  getFarm: (id: nat) -> (opt Farm) query;
+  getInventoryItem: (id: nat) -> (opt InventoryItem) query;
+  getNewsArticle: (id: nat) -> (opt NewsArticle) query;
+  getPayment: (id: nat) -> (opt Payment) query;
+  getProductionCycle: (id: nat) -> (opt ProductionCycle) query;
+  getReport: (id: nat) -> (opt Report) query;
+  getSale: (id: nat) -> (opt Sale) query;
+  getSupportRequest: (id: nat) -> (opt SupportRequest) query;
+  getUser: (id: nat) -> (opt User) query;
+  isCallerAdmin: () -> (bool) query;
+  listCrops: () -> (vec Crop) query;
+  listFarms: () -> (vec Farm) query;
+  listInventoryItems: () -> (vec InventoryItem) query;
+  listNewsArticles: () -> (vec NewsArticle) query;
+  listPayments: () -> (vec Payment) query;
+  listProductionCycles: () -> (vec ProductionCycle) query;
+  listReports: () -> (vec Report) query;
+  listSales: () -> (vec Sale) query;
+  listSupportRequests: () -> (vec SupportRequest) query;
+  listUsers: () -> (vec User) query;
+  schema: () -> (text) query;
+  updateCrop: (crop: Crop) -> ();
+  updateFarm: (farm: Farm) -> ();
+  updateNewsArticle: (id: nat, headline: text, subHeadline: text, body: 
+   text, regionalFocus: RegionalFocus, relatedCrops: vec text, tags:
+   vec text, status: ArticleStatus, scheduledPublishDate: opt int,
+   bannerImage: text) -> (opt NewsArticle);
+  updateNewsArticleStatus: (id: nat, status: ArticleStatus) ->
+   (opt NewsArticle);
+  updatePayment: (payment: Payment) -> ();
+  updateProductionCycle: (cycle: ProductionCycle) -> ();
+  updateReport: (report: Report) -> ();
+  updateSale: (sale: Sale) -> ();
+}

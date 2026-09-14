@@ -1,0 +1,336 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__386906547<Principal, UserRole__91647283>
+  };
+type ArticleStatus__769823770 = {#draft; #pendingReview; #published};
+type ArticleStatus__986820630 = {#draft; #pendingReview; #published};
+type Counter__1023996655 = {var nextCropId : Nat; var nextFarmId : Nat};
+type Crop__155069337 =
+  {
+    areaHa : Float;
+    cultivationPractices : Text;
+    description : Text;
+    farm : Nat;
+    harvestingYields : Text;
+    id : Nat;
+    image : ?Text;
+    lastHarvest : ?Int;
+    name : Text;
+    pestsDiseases : Text
+  };
+type Crop__790881105 =
+  {
+    areaHa : Float;
+    cultivationPractices : Text;
+    description : Text;
+    farm : Nat;
+    harvestingYields : Text;
+    id : Nat;
+    image : ?Text;
+    lastHarvest : ?Int;
+    name : Text;
+    pestsDiseases : Text
+  };
+type Data__265875254<K, V> = {var count : Nat__58649523; kvs : [var ?(K, V)]};
+type FarmStatus__1021406312 = {#active; #inactive};
+type FarmStatus__30663245 = {#active; #inactive};
+type Farm__359610371 =
+  {
+    id : Nat;
+    keyCrops : [Text];
+    location : Text;
+    manager : Text;
+    name : Text;
+    status : FarmStatus__30663245;
+    totalAreaHa : Float
+  };
+type Farm__632247409 =
+  {
+    id : Nat;
+    keyCrops : [Text];
+    location : Text;
+    manager : Text;
+    name : Text;
+    status : FarmStatus__1021406312;
+    totalAreaHa : Float
+  };
+type Internal__161573640<K, V> =
+  {children : [var ?Node__430031793<K, V>]; data : Data__265875254<K, V>};
+type InventoryItem__1040035893 =
+  {
+    id : Nat;
+    name : Text;
+    quantity : Float;
+    status : InventoryStatus__500800785;
+    threshold : Float;
+    unit : Text
+  };
+type InventoryItem__283424822 =
+  {
+    id : Nat;
+    name : Text;
+    quantity : Float;
+    status : InventoryStatus__584350652;
+    threshold : Float;
+    unit : Text
+  };
+type InventoryStatus__500800785 = {#critical; #inStock; #lowStock};
+type InventoryStatus__584350652 = {#critical; #inStock; #lowStock};
+type Leaf__1045638083<K, V> = {data : Data__265875254<K, V>};
+type List__1004628775<T> =
+  {
+    var blockIndex : Nat__58649523;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__58649523
+  };
+type List__89170296<T> = List__1004628775<T>;
+type Map__13625999<K, V> =
+  {var root : Node__430031793<K, V>; var size : Nat__58649523};
+type Map__386906547<K, V> = Map__670138087<K, V>;
+type Map__670138087<K, V> = Map__13625999<K, V>;
+type Nat__58649523 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__679825786 =
+  {
+    accessControlState : AccessControlState__201339279;
+    counter : Counter__1023996655;
+    crops : Map__386906547<Nat, Crop__790881105>;
+    cycles : Map__386906547<Nat, ProductionCycle__922976356>;
+    farms : Map__386906547<Nat, Farm__359610371>;
+    inventory : List__89170296<InventoryItem__1040035893>;
+    news : Map__386906547<Nat, NewsArticle__423356590>;
+    newsCounter : NewsCounter__232461287;
+    nextId : {var value : Nat};
+    payments : Map__386906547<Nat, Payment__15945583>;
+    reports : Map__386906547<Nat, Report__470595364>;
+    sales : Map__386906547<Nat, Sale__546087578>;
+    salesCounter : SalesCounter__467333009;
+    supportRequests : List__89170296<SupportRequest__864143758>;
+    users : List__89170296<SupportUser__595033448>
+  };
+type NewsArticle__407119424 =
+  {
+    bannerImage : Text;
+    body : Text;
+    createdAt : Int;
+    featuredOnPage : [Text];
+    headline : Text;
+    id : Nat;
+    regionalFocus : RegionalFocus__789193195;
+    relatedCrops : [Text];
+    scheduledPublishDate : ?Int;
+    status : ArticleStatus__769823770;
+    subHeadline : Text;
+    tags : [Text]
+  };
+type NewsArticle__423356590 =
+  {
+    bannerImage : Text;
+    body : Text;
+    createdAt : Int;
+    featuredOnPage : [Text];
+    headline : Text;
+    id : Nat;
+    regionalFocus : RegionalFocus__924110217;
+    relatedCrops : [Text];
+    scheduledPublishDate : ?Int;
+    status : ArticleStatus__986820630;
+    subHeadline : Text;
+    tags : [Text]
+  };
+type NewsCounter__232461287 = {var nextId : Nat};
+type Node__430031793<K, V> =
+  {#internal : Internal__161573640<K, V>; #leaf : Leaf__1045638083<K, V>};
+type OldActor__232881591 = {};
+type PaymentStatus__259417338 = {#pending; #processed};
+type PaymentStatus__678481988 = {#pending; #processed};
+type Payment__15945583 =
+  {
+    amount : Float;
+    date : Int;
+    description : Text;
+    id : Nat;
+    status : PaymentStatus__259417338
+  };
+type Payment__514974238 =
+  {
+    amount : Float;
+    date : Int;
+    description : Text;
+    id : Nat;
+    status : PaymentStatus__678481988
+  };
+type ProductionCycle__250724921 =
+  {
+    areaHa : Float;
+    crop : Text;
+    endDate : ?Int;
+    expectedYield : Float;
+    farmField : Text;
+    id : Nat;
+    stage : Stage__155059054;
+    startDate : Int;
+    status : Text
+  };
+type ProductionCycle__922976356 =
+  {
+    areaHa : Float;
+    crop : Text;
+    endDate : ?Int;
+    expectedYield : Float;
+    farmField : Text;
+    id : Nat;
+    stage : ProductionStage__539012474;
+    startDate : Int;
+    status : Text
+  };
+type ProductionStage__539012474 = {#growing; #harvesting; #planting};
+type RegionalFocus__789193195 = {#global; #malawi; #sadc};
+type RegionalFocus__924110217 = {#global; #malawi; #sadc};
+type ReportStatus__194114051 = {#generated; #saved};
+type ReportStatus__549417700 = {#generated; #saved};
+type ReportType__1052383955 = {#fieldActivity; #market; #soil; #yield};
+type ReportType__808340325 = {#fieldActivity; #market; #soil; #yield};
+type Report__470595364 =
+  {
+    generatedDate : Int;
+    id : Nat;
+    locationFarm : Text;
+    name : Text;
+    reportType : ReportType__808340325;
+    status : ReportStatus__549417700
+  };
+type Report__804974896 =
+  {
+    generatedDate : Int;
+    id : Nat;
+    locationFarm : Text;
+    name : Text;
+    reportType : ReportType__1052383955;
+    status : ReportStatus__194114051
+  };
+type Sale__289909216 =
+  {
+    buyer : Text;
+    crop : Text;
+    date : Int;
+    farm : Text;
+    id : Nat;
+    quantity : Float;
+    totalAmount : Float;
+    unitPrice : Float
+  };
+type Sale__546087578 =
+  {
+    buyer : Text;
+    crop : Text;
+    date : Int;
+    farm : Text;
+    id : Nat;
+    quantity : Float;
+    totalAmount : Float;
+    unitPrice : Float
+  };
+type SalesCounter__467333009 =
+  {var nextPaymentId : Nat; var nextReportId : Nat; var nextSaleId : Nat};
+type Stage__155059054 = {#growing; #harvesting; #planting};
+type SupportPriority__414425573 = {#important; #urgent};
+type SupportPriority__938244935 = {#important; #urgent};
+type SupportRequest__370329265 =
+  {
+    attachments : [Text];
+    category : Text;
+    createdAt : Int;
+    description : Text;
+    id : Nat;
+    priority : SupportPriority__414425573;
+    status : SupportStatus__395801188;
+    subject : Text
+  };
+type SupportRequest__864143758 =
+  {
+    attachments : [Text];
+    category : Text;
+    createdAt : Int;
+    description : Text;
+    id : Nat;
+    priority : SupportPriority__938244935;
+    status : SupportStatus__229637348;
+    subject : Text
+  };
+type SupportStatus__229637348 = {#closed; #inProgress; #open; #resolved};
+type SupportStatus__395801188 = {#closed; #inProgress; #open; #resolved};
+type SupportUser__595033448 =
+  {email : Text; id : Nat; name : Text; role : Text};
+type UserRole__91647283 = {#admin; #guest; #user};
+type User__480142869 = {email : Text; id : Nat; name : Text; role : Text};
+{
+  "20260911_000000" : (_old : OldActor__232881591) -> NewActor__679825786
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__386906547<Principal, UserRole__91647283>
+    };
+  stable counter : {var nextCropId : Nat; var nextFarmId : Nat};
+  stable crops :
+    {
+      var root : Node__430031793<Nat, Crop__155069337>;
+      var size : Nat__58649523
+    };
+  stable cycles :
+    {
+      var root : Node__430031793<Nat, ProductionCycle__250724921>;
+      var size : Nat__58649523
+    };
+  stable farms :
+    {
+      var root : Node__430031793<Nat, Farm__632247409>;
+      var size : Nat__58649523
+    };
+  stable inventory :
+    {
+      var blockIndex : Nat__58649523;
+      var blocks : [var [var ?InventoryItem__283424822]];
+      var elementIndex : Nat__58649523
+    };
+  stable news :
+    {
+      var root : Node__430031793<Nat, NewsArticle__407119424>;
+      var size : Nat__58649523
+    };
+  stable newsCounter : {var nextId : Nat};
+  stable nextId : {var value : Nat};
+  stable payments :
+    {
+      var root : Node__430031793<Nat, Payment__514974238>;
+      var size : Nat__58649523
+    };
+  stable reports :
+    {
+      var root : Node__430031793<Nat, Report__804974896>;
+      var size : Nat__58649523
+    };
+  stable sales :
+    {
+      var root : Node__430031793<Nat, Sale__289909216>;
+      var size : Nat__58649523
+    };
+  stable salesCounter :
+    {var nextPaymentId : Nat; var nextReportId : Nat; var nextSaleId : Nat};
+  stable supportRequests :
+    {
+      var blockIndex : Nat__58649523;
+      var blocks : [var [var ?SupportRequest__370329265]];
+      var elementIndex : Nat__58649523
+    };
+  stable users :
+    {
+      var blockIndex : Nat__58649523;
+      var blocks : [var [var ?User__480142869]];
+      var elementIndex : Nat__58649523
+    }
+};
